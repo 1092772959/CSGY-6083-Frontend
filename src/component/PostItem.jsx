@@ -22,7 +22,7 @@ const PostItem = ({
     quesId,
     uid,
     username,
-    topicId,
+    topic_id,
     date,
     title,
     quesBody,
@@ -30,19 +30,6 @@ const PostItem = ({
     tags,
   },
 }) => {
-  // const answerVoteUp = (
-  //   <div className='vote answer'>
-  //     <span className='vote-count fc-green-500'>{answer_count}</span>
-  //     <div className='count-text'>answers</div>
-  //   </div>
-  // );
-
-  // const answerVoteDown = (
-  //   <div className='vote'>
-  //     <span className='vote-count'>{answer_count}</span>
-  //     <div className='count-text'>answers</div>
-  //   </div>
-  // );
 
   return (
     <Grid item xs={12} >
@@ -55,18 +42,13 @@ const PostItem = ({
                     <Link to={`/questions/${quesId}`}>{title}</Link>
                   </Typography>
                 </Grid>
-                {/* <Grid item xs={1}>
-                  <Typography variant="subtitle2" gutterBottom component="div">
-                    {username}  
-                  </Typography>
-                </Grid> */}
               </Grid>
               </CardActionArea>
       
               {/* <br/> */}
               <Grid container >
                 <Typography variant="subtitle1" color="text.secondary">
-                  {date} 
+                  {date.toLocaleString()} 
                 </Typography>
 
                 <Typography variant="subtitle1" color="text.first">
@@ -78,9 +60,6 @@ const PostItem = ({
                   </Typography>
                 </Link>
               </Grid>
-              {/* <Typography component="h2" variant="h5">
-                {title}
-              </Typography> */}
               
               <Typography variant="subtitle1" paragraph>
                 {quesBody.substring(0, 200)}
@@ -110,68 +89,6 @@ const PostItem = ({
             </CardContent>
           </Card>
     </Grid>
-    // <div className='posts'>
-      
-    //   <div className='stats-container fc-black-500'>
-    //     <div className='stats'>
-    //       {/* <div className='vote'>
-    //         <span className='vote-count'>{comment_count}</span>
-    //         <div className='count-text'>comments</div>
-    //       </div>
-    //       {answer_count > 0 ? answerVoteUp : answerVoteDown} */}
-    //       <div className='vote'>
-    //         <span className='vote-count'>{answerCount}</span>
-    //         <div className='count-text'>answers</div>
-    //       </div>
-    //       {/* <div className='vote'>
-    //         <span className='vote-count'>{tags.length}</span>
-    //         <div className='count-text'>tags</div>
-    //       </div> */}
-    //       {/* <div className='vote'>
-    //         <div className='count-text'>{views} views</div>
-    //       </div> */}
-    //     </div>
-    //   </div>
-    //   <div className='summary'>
-    //     <Grid container alignItems='center'>
-    //       <Grid item xs={1}>
-    //         <Typography variant="subtitle2" gutterBottom component="div">
-    //           {username}  
-    //         </Typography>
-    //       </Grid>
-    //       <Grid item xs={11}>
-    //         <Typography>
-    //           <Link to={`/questions/${quesId}`}>{title}</Link>
-    //         </Typography>
-    //       </Grid>
-    //     </Grid>
-        
-    //     <div className='brief' dangerouslySetInnerHTML={{__html: injectEllipsis(htmlSubstring(quesBody, 200))}}></div>
-        
-    //     <Grid container spacing={2}>
-    //       <Grid item xs={10}>
-    //         <Stack direction="row" spacing={1}>
-    //         {tags.map((tag, index) => (
-    //           <Chip label={tag} />
-    //           // <TagBadge key={index} tag_name={tag.tagname} size={'s-tag'} float={'left'} />
-    //         ))}
-    //         </Stack>
-    //       </Grid>
-          
-    //       <Grid item xs={2}>
-    //           <p>{date}</p>
-    //       </Grid>
-    //     </Grid>
-
-    //     {/* <UserCard
-    //       created_at={date}
-    //       user_id={uid}
-    //       username={username}
-    //       float={'right'}
-    //       backgroundColor={'transparent'}
-    //     /> */}
-    //   </div>
-    // </div>
   );
 };
 

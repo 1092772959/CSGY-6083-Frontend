@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Question from './pages/Question';
+import PostQuestion from './pages/PostQuestion';
 
 const Router = () => {
   return (
@@ -13,6 +14,7 @@ const Router = () => {
         <Route exact path='/signup' element={<SignUp />}></Route>
         <Route exact path='/signin' element={<SignIn />}></Route>
         <Route exact path='/questions/:quesId' element={<Question />}></Route>
+        <Route exact path='/questions/post' element={<PostQuestion />}></Route>
       </Routes>
     </div>
   );

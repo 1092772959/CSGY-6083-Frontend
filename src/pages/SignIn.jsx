@@ -12,6 +12,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
+import axios from 'axios';
+
+import {BASE_URL} from '../config/server';
 
 function Copyright(props) {
   return (
@@ -29,19 +35,72 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+
+  const [successSnack, setSuccessSnack] = React.useState(false);
+  const [failSnack, setFailSnack] = React.useState(false);
+  const [loginSuccess, setLoginSuccess] = React.useState(false);
+  // const [error, setError] = React.useState(false);
+  
+  const handleClose1 = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSuccessSnack(false);
+  };
+
+  const handleClose2 = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setFailSnack(false);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    //console.log(data);
+
+    const header = {
+      headers : {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
+
+    var bodyFormData = new FormData();
+    bodyFormData.append('username', data.get('email'));
+    bodyFormData.append('password', data.get('password'));
+
+    // request
+    axios.post(BASE_URL + '/users/login', bodyFormData, header)
+      .then(res => {
+        const data = res.data;
+        if (data.code == 0) {
+          localStorage.setItem('uid', data.data);
+          // redirect to home
+          window.location = "/"; 
+        } else { 
+          setFailSnack(true);
+        }
+        
+      }).catch( error => {
+        return (
+          <Alert severity="error">{error}</Alert>
+        );
+      });
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <Snackbar
+          open={failSnack}
+          autoHideDuration={6000}
+          onClose={handleClose2}
+          message="Wrong Username or Password!"
+          // action={action}
+        />
         <Box
           sx={{
             marginTop: 8,

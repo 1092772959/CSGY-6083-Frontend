@@ -12,6 +12,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Alert from '@mui/material/Alert';
+
+import axios from 'axios';
+
+import { BASE_URL } from '../config/server';
 
 function Copyright(props) {
   return (
@@ -32,10 +37,34 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    
+    var bodyFormData = new FormData();
+    bodyFormData.append('username', data.get('userName'));
+    bodyFormData.append('password', data.get('password'));
+    bodyFormData.append('email', data.get('email'));
+    
+    const header = {
+      headers : {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
+
+    axios.post(BASE_URL + '/users', bodyFormData, header)
+      .then(res => {
+        const data = res.data;
+        return (
+          <Alert onClose={() => {}}>Sign up succeed!</Alert>
+        );
+      }).catch( error => {
+        return (
+          <Alert severity="error">{error}</Alert>
+        );
+      });
+    
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
   };
 
   return (

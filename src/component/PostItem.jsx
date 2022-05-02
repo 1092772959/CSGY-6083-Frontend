@@ -19,13 +19,13 @@ import './PostItem.scss';
 
 const PostItem = ({
   post: {
-    quesId,
+    ques_id,
     uid,
     username,
     topic_id,
     date,
     title,
-    quesBody,
+    ques_body,
     answerCount,
     tags,
   },
@@ -39,7 +39,7 @@ const PostItem = ({
               <Grid container alignItems='center'>
                 <Grid item xs={11}>
                   <Typography variant="subtitle1" gutterBottom component="div">
-                    <Link to={`/questions/${quesId}`}>{title}</Link>
+                    <Link to={`/questions/${ques_id}`}>{title}</Link>
                   </Typography>
                 </Grid>
               </Grid>
@@ -62,7 +62,7 @@ const PostItem = ({
               </Grid>
               
               <Typography variant="subtitle1" paragraph>
-                {quesBody.substring(0, 200)}
+                {ques_body.substring(0, 200)}
               </Typography>
                 <Grid item justifyContent="flex-end">
                   <Stack direction="row" spacing={1}>

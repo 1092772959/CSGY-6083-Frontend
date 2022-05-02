@@ -4,6 +4,8 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+import {Button, TextField} from '@mui/material';
+
 
 import postsData from '../data/postsData';
 import { useParams } from "react-router-dom";
@@ -51,16 +53,41 @@ export default function Question() {
           Answers
         </Typography>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: 1}}>
+      <Grid container spacing={5} sx={{ mt: 1}}>
         {answers.map((ans) => {
           return (
             <Answer answer={ans}> </Answer>
           )
         })}
-      </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h4" gutterBottom component="div">
+              Post your Answer
+          </Typography>
+          <TextField
+              id="outlined-multiline-static"
+              fullWidth
+              label="Option"
+              multiline
+              rows={20}
+              defaultValue="Default Value"
+              variant="outlined"
+            />
+            <br/>
+            <br/>
+            <div style={{ display: "flex" }}>
+                <Button 
+                  variant="contained" 
+                  color="primary"
+                  size="large"
+                  style={{ marginLeft: "auto" }}>
+                  Post
+                </Button>
+            </div>
+         </Grid>
+        </Grid>
       </main>
-      
     </Container>
+      
   </ThemeProvider>
   );
 };

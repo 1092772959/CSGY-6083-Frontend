@@ -52,13 +52,10 @@ export default function SignUp() {
     axios.post(BASE_URL + '/users', bodyFormData, header)
       .then(res => {
         const data = res.data;
-        return (
-          <Alert onClose={() => {}}>Sign up succeed!</Alert>
-        );
+        alert('Signup Success!');
+        window.location = '/signin';
       }).catch( error => {
-        return (
-          <Alert severity="error">{error}</Alert>
-        );
+        alert('Network error');
       });
     
     // console.log({

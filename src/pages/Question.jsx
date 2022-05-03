@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import {Button, TextField} from '@mui/material';
+import {Button, TextField, alertTitleClasses} from '@mui/material';
 
 
 import postsData from '../data/postsData';
@@ -15,15 +15,47 @@ import PostItem from '../component/PostItem';
 import Answer from '../component/Answer';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import answers from '../data/answers';
+import {default as mockAnswers }from '../data/answers';
 
 import PrimarySearchAppBar from '../component/Header';
+import axios from 'axios';
+import { BASE_URL } from '../config/server';
 const theme = createTheme();
 
 export default function Question() {
 
-  const post = postsData[0];
-  let params = useParams();
+  const [post, setPost] = useState(postsData[0]);
+  const [answers, setAnswers] = useState(mockAnswers);
+
+  const params = useParams();
+
+  const uid = localStorage.getItem('uid');
+
+  // get question
+  useEffect( () => {
+    let ques_id = params.quesId
+    console.log(ques_id);
+    axios.get(BASE_URL + '/questions/' + ques_id)
+      .then(res => {
+        setPost(res.data.data);
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }, []);
+
+  // get answers
+  useEffect( () => {
+    let ques_id = params.quesId;
+    axios.get(BASE_URL + '/answers/question?ques_id=' + ques_id + '&uid=' + uid)
+      .then(res => {
+        setAnswers(res.data.data);
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }, []);
+
 
   return (
   <ThemeProvider theme={theme}>

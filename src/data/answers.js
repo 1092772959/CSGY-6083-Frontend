@@ -9,7 +9,8 @@ export default [
     Then, k times, we need to create a new 2D array and follow the given rules to move the values. 
     If we're using Java, we'll also need to then convert the output from a 2D Array to a 2D list.`,
     isBest: 1,
-    likes: 3
+    thumb_ups: 3,
+    likedByUser: 1,
   },
   {
     ans_id: 2,
@@ -19,6 +20,7 @@ export default [
     date: '2021-02-04 12:55:55',
     ans_body: `This is done with 'ANALYZE TABLE table_name;'`,
     isBest: 0,
-    likes: 0
+    thumb_ups: 0,
+    likedByUser: 0
   },
 ];

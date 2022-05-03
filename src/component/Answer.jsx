@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {useState} from 'react';
 
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
@@ -19,7 +19,9 @@ import Paper from '@mui/material/Paper';
 import Fab from '@mui/material/Fab';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import IconButton from '@mui/material/IconButton';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { styled } from '@mui/material/styles';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -40,9 +42,26 @@ const Answer = ({
     date,
     ans_body,
     isBest,
-    likes
+    thumb_ups,
+    likedByUser
   },
 }) => {
+
+  const curUId = parseInt(localStorage.getItem('uid'));
+
+  const [liked, setLiked] = useState(likedByUser);
+  const [curLikes, setCurLikes] = useState(thumb_ups);
+
+  const handleLike = () => {
+    if (liked === 1) {
+      setLiked(0);
+      setCurLikes(curLikes - 1);
+    } else {
+      setLiked(1);
+      setCurLikes(curLikes + 1);
+    }
+    // send request
+  };
 
   return (
     <Grid item xs={12} >
@@ -71,12 +90,30 @@ const Answer = ({
               <br />
               <Grid container >
                 <Grid item xs={2}>
-                  <Stack direction="row" spacing={2}>
-                    {/* <Fab size="small"> */}
-                      <ThumbUpOffAltIcon></ThumbUpOffAltIcon>
+                  <Grid container>
+                  <Grid item xs={2} sx={{ml: 1}}>
+                  <IconButton
+                      // size="small"
+                      edge="start"
+                      color="inherit"
+                      aria-label="open drawer"
+                      onClick={handleLike}
+                      >
+                        {liked === 1? <ThumbUpAltIcon/> : <ThumbUpOffAltIcon/>}
+                    </IconButton>
+                  </Grid>
+                  <Grid item xs={1}>
+                    {/* <br/> */}
+                    <Grid sx={{ p: 1 }}>
+
+                      <Typography >{curLikes}</Typography>
+                    </Grid>
+                  </Grid>
                     {/* </Fab> */}
-                    <Typography >{likes}</Typography>
-                  </Stack>
+                  </Grid>
+                  {/* <Stack direction="row" spacing={2}> */}
+                    {/* <Fab size="small"> */}
+                  {/* </Stack> */}
                 </Grid>
                 <Grid item xs={8}>
                   {/* empty grid */}

@@ -15,6 +15,11 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import Button from '@mui/material/Button';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { BASE_URL } from '../config/server';
+
+import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -154,6 +159,19 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
+  const handleLogout = () => {
+    console.log('logout');
+    axios.get(BASE_URL + '/users/logout')
+      .then(res => {
+        console.log(res.data);
+        localStorage.removeItem('uid');
+        window.location = "/signin";
+      })
+      .catch(error => {
+        alert("Network error!");
+      });
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -163,6 +181,7 @@ export default function PrimarySearchAppBar() {
             edge="start"
             color="inherit"
             aria-label="open drawer"
+            onClick={() => {window.location="/"}}
             sx={{ mr: 2 }}
           >
             <MenuIcon />
@@ -173,9 +192,9 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            Buffer Overflow
           </Typography>
-          <Search>
+          {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -183,10 +202,19 @@ export default function PrimarySearchAppBar() {
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
-          </Search>
+          </Search> */}
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <IconButton 
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleLogout}
+            sx={{ mr: 2 }}>
+            <LogoutIcon />
+          </IconButton>
+          {/* <Box> */}
+            {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="error">
                 <MailIcon />
               </Badge>
@@ -210,9 +238,9 @@ export default function PrimarySearchAppBar() {
               color="inherit"
             >
               <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            </IconButton> */}
+          {/* </Box> */}
+          {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="show more"
@@ -223,7 +251,7 @@ export default function PrimarySearchAppBar() {
             >
               <MoreIcon />
             </IconButton>
-          </Box>
+          </Box> */}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

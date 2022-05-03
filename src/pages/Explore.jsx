@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 import postsData from '../data/postsData';
 import PostItem from '../component/PostItem';
@@ -70,7 +72,19 @@ const HomePage = () => {
                 <Grid item xs = {5}>
                   <TopicSelector setQuestions={handleChange}></TopicSelector>
                 </Grid>
+                <Grid item xs = {5}>
+                  <div style={{ display: "flex" }}>
+                    <Button component={Link} to="/questions/post"
+                      variant="contained" 
+                      color="primary"
+                      size="large"
+                      style={{ marginLeft: "auto" }}>
+                      Ask a Question
+                    </Button>
+                  </div>
+                </Grid>
               </Grid>
+              
               <Grid container spacing={3} >
                 {state.showedQuestions.map((post) => {
                   return (

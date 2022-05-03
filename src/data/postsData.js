@@ -13,6 +13,7 @@ export default [
       'Computer Science',
       'Algorithms',
     ],
+    isSolved: true,
   },
   {
     ques_id: 2,
@@ -28,6 +29,7 @@ export default [
       'Computer Science',
       'Databases',
     ],
+    isSolved: true,
   },
   {
     ques_id: 3,
@@ -43,6 +45,7 @@ export default [
       'Computer Science',
       'Databases',
     ],
+    isSolved: false,
   },
   {
     ques_id: 4,
@@ -57,6 +60,7 @@ export default [
     tags: [
       'Computer Science',
     ],
+    isSolved: false,
   },
   {
     ques_id: 5,
@@ -71,5 +75,6 @@ export default [
     tags: [
       'Databases',
     ],
+    isSolved: false,
   },
 ];

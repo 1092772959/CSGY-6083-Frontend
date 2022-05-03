@@ -35,7 +35,7 @@ const TopicSelector = ({ setQuestions }) => {
           label="Parent Topic"
           onChange={handleParentTopicChange}
         > 
-          <MenuItem value="-1">
+          <MenuItem value={-1}>
             {/* <em>None</em> */}
             All
           </MenuItem>
@@ -61,7 +61,7 @@ const TopicSelector = ({ setQuestions }) => {
           displayEmpty
           // inputProps={{ 'aria-label': 'Without label' }}
         >
-          <MenuItem value="-1">
+          <MenuItem value={-1}>
             All
           </MenuItem>
           {topics.filter(topicItem => parentTopic != -1 ? (topicItem.parent_id == parentTopic) : false)

@@ -22,7 +22,7 @@ const Dashboard = () => {
 
   const[state, setState]=useState({
     questions: postsData,
-    
+    showedQuestions: postsData,
   });
 
   useEffect(() => {
@@ -31,9 +31,9 @@ const Dashboard = () => {
     axios.get(BASE_URL + '/questions/user?uid=' + uid)
     .then(res => {
       let data = res.data;
-      // console.log(data.data[0]);
       setState({
-        questions: data.data
+        questions: data.data,
+        showedQuestions: data.data
       });
     })
     .catch(error => {
@@ -98,11 +98,11 @@ const Dashboard = () => {
                 </Grid>
               </Grid>
               <Grid container spacing={3} >
-                {state.questions.map((post) => {
+                {state.showedQuestions.map((post) => {
                   return (
                     <PostItem post={post}></PostItem>
                   )
-                })}  
+                })}
               </Grid>
             </Grid>
             </Grid>

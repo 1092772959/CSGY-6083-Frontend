@@ -40,8 +40,8 @@ export default function Question() {
       .then(res => {
         const data = res.data;
         if (data.code == 0) {
-          // redirect to home
-          // window.location = "/questions"; 
+          // redirect to dashboard
+          window.location = "/"; 
         } else { 
           setFailSnack(true);
         }

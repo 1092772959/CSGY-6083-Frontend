@@ -96,6 +96,17 @@ const Dashboard = () => {
                 <Grid item xs = {5}>
                   <TopicSelector setQuestions={handleChange}></TopicSelector>
                 </Grid>
+                <Grid item xs = {3}>
+                  <div style={{ display: "flex" }}>
+                    <Button component={Link} to="/questions/post"
+                      variant="contained" 
+                      color="primary"
+                      size="large"
+                      style={{ marginLeft: "auto" }}>
+                      Ask a Question
+                    </Button>
+                  </div>
+                </Grid>
               </Grid>
               <Grid container spacing={3} >
                 {state.showedQuestions.map((post) => {

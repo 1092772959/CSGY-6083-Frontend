@@ -1,31 +1,24 @@
 import React, {useEffect, useState} from 'react';
+import { useParams } from "react-router-dom";
 
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import {Button, TextField, alertTitleClasses} from '@mui/material';
-
+import {Grid, Container, Button, TextField, alertTitleClasses, Alert, Paper, Typography} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import postsData from '../data/postsData';
-import { useParams } from "react-router-dom";
-import Divider from '@mui/material/Divider';
-
 import PostItem from '../component/PostItem';
 import Answer from '../component/Answer';
-
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {default as mockAnswers }from '../data/answers';
-
 import PrimarySearchAppBar from '../component/Header';
+
 import axios from 'axios';
 import { BASE_URL } from '../config/server';
+
 const theme = createTheme();
 
 export default function Question() {
 
   const [post, setPost] = useState(postsData[0]);
   const [answers, setAnswers] = useState([]);
+  const [failSnack, setFailSnack] = React.useState(false);
 
   const params = useParams();
 
@@ -34,7 +27,6 @@ export default function Question() {
   // get question
   useEffect( () => {
     let ques_id = params.quesId
-    console.log(ques_id);
     axios.get(BASE_URL + '/questions/' + ques_id)
       .then(res => {
         setPost(res.data.data);
@@ -56,6 +48,36 @@ export default function Question() {
       });
   }, []);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    var bodyFormData = new FormData();
+    bodyFormData.append('body', data.get('body'));
+    let ques_id = params.quesId;
+
+    const header = {
+      headers : {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
+    
+    // request
+    axios.post(BASE_URL + '/answers?uid=' + uid + '&ques_id=' + ques_id, bodyFormData, header)
+      .then(res => {
+        const data = res.data;
+        if (data.code == 0) {
+          // redirect to dashboard
+          window.location = "/questions/" + ques_id; 
+        } else { 
+          setFailSnack(true);
+        }
+      }).catch( error => {
+        return (
+          <Alert severity="error">{error}</Alert>
+        );
+      });
+  };  
 
   return (
   <ThemeProvider theme={theme}>
@@ -95,8 +117,10 @@ export default function Question() {
           <Typography variant="h4" gutterBottom component="div">
               Post your Answer
           </Typography>
+          <form onSubmit={handleSubmit}>
           <TextField
               id="outlined-multiline-static"
+              name="body"
               fullWidth
               label="Option"
               multiline
@@ -108,6 +132,7 @@ export default function Question() {
             <br/>
             <div style={{ display: "flex" }}>
                 <Button 
+                  type="submit"
                   variant="contained" 
                   color="primary"
                   size="large"
@@ -115,6 +140,7 @@ export default function Question() {
                   Post
                 </Button>
             </div>
+            </form>
          </Grid>
         </Grid>
       </main>

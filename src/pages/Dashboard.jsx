@@ -37,8 +37,8 @@ const Dashboard = () => {
       });
     })
     .catch(error => {
-      alert('Network error!');
-      console.log(error);
+      alert('Please Login');
+      window.location = "/signin"; 
     });
 
   }, []);

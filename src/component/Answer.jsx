@@ -16,13 +16,14 @@ import './PostItem.scss';
 
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
-import Fab from '@mui/material/Fab';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import IconButton from '@mui/material/IconButton';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { styled } from '@mui/material/styles';
+
+import axios from 'axios';
+
+import {BASE_URL} from '../config/server';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -55,12 +56,31 @@ const Answer = ({
   const handleLike = () => {
     if (liked === 1) {
       setLiked(0);
-      setCurLikes(curLikes - 1);
+      // setCurLikes(curLikes - 1);
+      // delete request
+      axios.delete(BASE_URL + '/likes/ans?uid=' + curUId + "&ans_id=" + ans_id)
+        .then(res => {
+          let answer = res.data.data;
+          setCurLikes(answer.thumb_ups);
+          alert('Like succeed!');
+        })
+        .catch(error => {
+          alert("Network error!");
+        });
     } else {
       setLiked(1);
-      setCurLikes(curLikes + 1);
+      // setCurLikes(curLikes + 1);
+      // like request
+      axios.post(BASE_URL + '/likes/ans?uid=' + curUId + "&ans_id=" + ans_id)
+        .then(res => {
+          let answer = res.data.data;
+          setCurLikes(answer.thumb_ups);
+          alert('Unlike succeed!');
+        })
+        .catch(error => {
+          alert("Network error!");
+        })
     }
-    // send request
   };
 
   return (

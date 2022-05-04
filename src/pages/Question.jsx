@@ -25,7 +25,7 @@ const theme = createTheme();
 export default function Question() {
 
   const [post, setPost] = useState(postsData[0]);
-  const [answers, setAnswers] = useState(mockAnswers);
+  const [answers, setAnswers] = useState([]);
 
   const params = useParams();
 

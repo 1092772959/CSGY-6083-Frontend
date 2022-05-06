@@ -53,7 +53,7 @@ export default function SignUp() {
       .then(res => {
         const data = res.data;
         alert('Signup Success!');
-        window.location = '/';
+        window.location = '/signin';
       }).catch( error => {
         alert('Network error');
       });

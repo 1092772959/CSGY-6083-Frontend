@@ -40,15 +40,20 @@ const HomePage = () => {
       });
   }, []);
   
-  const handleChange = (event, parentTopicId, TopicId) => {
+  const handleChangeKeyword = (event) => {
     event.preventDefault();
+    
+    setState({
+      questions: [],
+      showedQuestions: []
+    });
+
     let keyword = event.currentTarget.value;
     if(keyword !== ''){
       axios.get(BASE_URL + '/questions/search/' + keyword)
       .then(res => {
         let data = res.data;
         if(data.code == 0){
-          console.log(data);
           setState({
             questions: data.data,
             showedQuestions: data.data
@@ -59,7 +64,10 @@ const HomePage = () => {
         alert('No keyword Match');
       });
     }
+  }
 
+  const handleChangeTopic = (parentTopicId, TopicId) => {
+   
     if (parentTopicId === -1) {
       setState({
         questions: state.questions,
@@ -108,7 +116,7 @@ const HomePage = () => {
                   </Typography>  
                 </Grid>
                 <Grid item xs = {3}>
-                  <TopicSelector setQuestions={handleChange}></TopicSelector>
+                  <TopicSelector setQuestions={handleChangeTopic}></TopicSelector>
                 </Grid>
                 <Grid item xs = {4}>
                     <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -119,7 +127,7 @@ const HomePage = () => {
                          name="keyword"
                          autoComplete="keyword"
                          autoFocus
-                         onChange={handleChange}
+                         onChange={handleChangeKeyword}
                         />
                     </FormControl>
                 </Grid>

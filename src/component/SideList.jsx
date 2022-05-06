@@ -28,23 +28,11 @@ const SideList = () => {
       </ListItemIcon>
       <ListItemText primary="Explore" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton component={Link} to="/profile">
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText primary="Profile" />
     </ListItemButton>
   </Grid>
   )};

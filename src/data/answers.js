@@ -11,7 +11,6 @@ export default [
     isBest: 1,
     thumb_ups: 3,
     likedByUser: 1,
-    quid: 5
   },
   {
     ans_id: 2,
@@ -23,6 +22,5 @@ export default [
     isBest: 0,
     thumb_ups: 0,
     likedByUser: 0,
-    quid: 5
   },
 ];

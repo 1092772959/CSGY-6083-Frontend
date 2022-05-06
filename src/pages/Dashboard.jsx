@@ -15,6 +15,7 @@ import SideList from '../component/SideList';
 import axios from 'axios';
 
 import {BASE_URL} from '../config/server';
+import AnswerWithTitle from '../component/AnswerWithTitle';
 
 const theme = createTheme();
 
@@ -25,8 +26,11 @@ const Dashboard = () => {
     showedQuestions: postsData,
   });
 
+  const [myAnswer, setMyAnswer] = useState([]);
+
+  const uid = localStorage.getItem('uid');
+
   useEffect(() => {
-    const uid = localStorage.getItem('uid');
     
     if(uid == null){
       alert('Please Login');
@@ -45,7 +49,24 @@ const Dashboard = () => {
       alert('Please Login');
       window.location = "/signin"; 
     });
+  }, []);
 
+  useEffect(() => {
+    // get my answers
+    if (uid == null) {
+      alert('Please login');
+      window.localtion = "/signin";
+    }
+    
+    axios.get(BASE_URL + "/answers/user?uid=" + uid)
+      .then(res => {
+        let data = res.data.data;
+        console.log(data);
+        setMyAnswer(data);
+      })
+      .catch(error => {
+        alert("Network error!");
+      });
   }, []);
   
   const handleChange = (parentTopicId, TopicId) => {
@@ -117,6 +138,21 @@ const Dashboard = () => {
                 {state.showedQuestions.map((post) => {
                   return (
                     <PostItem post={post}></PostItem>
+                  )
+                })}
+              </Grid>
+              <br/>
+              <Grid>
+                <Typography variant="h5" gutterBottom component="div">
+                  My Answers
+                </Typography>
+              </Grid>
+              <Grid container>
+                {myAnswer.map((ans) => {
+                  return (
+                    <AnswerWithTitle
+                      answer={ans} 
+                    /> 
                   )
                 })}
               </Grid>

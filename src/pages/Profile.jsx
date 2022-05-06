@@ -17,7 +17,7 @@ export default function Profile() {
     const data = new FormData(event.currentTarget);
     const uid = localStorage.getItem('uid');
     
-    var bodyFormData = new FormData();
+    var bodyFormData = new FormData();  
     bodyFormData.append('username', data.get('username'));
     bodyFormData.append('password', data.get('password'));
     bodyFormData.append('email', data.get('email'));
@@ -39,7 +39,7 @@ export default function Profile() {
         const data = res.data;
         if (data.code == 0) {
           // redirect to dashboard
-          window.location = "/"; 
+        //   window.location = "/"; 
         } else { 
           setFailSnack(true);
         }
@@ -73,7 +73,7 @@ export default function Profile() {
             <Grid item xs={12}>
                 <TextField
                     autoComplete="given-name"
-                    name="userName"
+                    name="username"
                     required
                     fullWidth
                     id="username"

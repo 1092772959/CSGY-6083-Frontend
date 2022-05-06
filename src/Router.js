@@ -6,6 +6,7 @@ import SignIn from './pages/SignIn';
 import Question from './pages/Question';
 import PostQuestion from './pages/PostQuestion';
 import Explore from './pages/Explore';
+import Profile from './pages/Profile';
 
 const Router = () => {
   return (
@@ -17,6 +18,7 @@ const Router = () => {
         <Route exact path='/explore' element={<Explore />}></Route>
         <Route exact path='/questions/:quesId' element={<Question />}></Route>
         <Route exact path='/questions/post' element={<PostQuestion />}></Route>
+        <Route exact path='/profile' element={<Profile />}></Route>
       </Routes>
     </div>
   );

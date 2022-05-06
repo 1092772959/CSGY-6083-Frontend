@@ -32,6 +32,14 @@ const SideList = () => {
       <ListItemText primary="My Answers" />
     </ListItemButton>
     </Grid>
+    <Grid item xs={12}>
+    <ListItemButton component={Link} to="/mylikes">
+      <ListItemIcon>
+        <ShoppingCartIcon />
+      </ListItemIcon>
+      <ListItemText primary="My Likes" />
+    </ListItemButton>
+    </Grid>
 
     <Grid item xs={12}>
     <ListItemButton component={Link} to="/explore">

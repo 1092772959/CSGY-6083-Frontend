@@ -85,7 +85,7 @@ const AnswerWithTitle = ({
   };
 
   return (
-    <Grid item xs={12} >
+    <Grid item xs={12} sx={{mt: 2}}>
       <Card sx={{ display: 'flex' }}>
           <CardContent sx={{ flex: 1 }}>
               <Grid container>

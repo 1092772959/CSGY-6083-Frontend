@@ -21,7 +21,15 @@ const SideList = () => {
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="My Questions" />
+    </ListItemButton>
+    </Grid>
+    <Grid item xs={12}>
+    <ListItemButton button component={Link} to="/myanswer">
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+      <ListItemText primary="My Answers" />
     </ListItemButton>
     </Grid>
 

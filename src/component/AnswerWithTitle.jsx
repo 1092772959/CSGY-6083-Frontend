@@ -84,45 +84,13 @@ const AnswerWithTitle = ({
     }
   };
 
-  // const handleMarkBest = () => {
-  //   if (hasBest == 0 && best == 0) {
-  //     axios.post(BASE_URL + "/answers/best?ans_id=" + ans_id + "&is_best=1")
-  //       .then(res => {
-  //         if (res.data.code == 0) {      
-  //           setBest(1);
-  //           setHasBest(1); 
-  //         } else {
-  //           console.log(res.data);
-  //         }
-  //       })
-  //       .catch(err => {
-  //         alert("Network error!");
-  //       });
-  //   } else if (hasBest == 1 && best == 1) {
-  //     axios.post(BASE_URL + "/answers/best?ans_id=" + ans_id + "&is_best=0")
-  //       .then(res => {
-  //         if (res.data.code == 0) {      
-  //           setBest(0);
-  //           setHasBest(0); 
-  //         } else {
-  //           console.log(res.data);
-  //         }
-  //       })
-  //       .catch(err => {
-  //         alert("Network error!");
-  //       });
-  //   } else {
-  //     alert("Set best answer error!");
-  //   }
-  // };
-
   return (
     <Grid item xs={12} >
       <Card sx={{ display: 'flex' }}>
           <CardContent sx={{ flex: 1 }}>
               <Grid container>
                 <Typography variant="subtitle1" gutterBottom component="div">
-                  <Link to={`/questions/${ques_id}`}>{title}</Link>
+                  Question: <Link to={`/questions/${ques_id}`}>{title}</Link>
                 </Typography>
               </Grid>
               <Grid container >

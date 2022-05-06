@@ -15,58 +15,42 @@ import SideList from '../component/SideList';
 import axios from 'axios';
 
 import {BASE_URL} from '../config/server';
-import AnswerWithTitle from '../component/AnswerWithTitle';
 
 const theme = createTheme();
 
 const Dashboard = () => {
 
   const[state, setState]=useState({
-    questions: postsData,
-    showedQuestions: postsData,
+    questions: [],
+    showedQuestions: [],
   });
-
-  const [myAnswer, setMyAnswer] = useState([]);
 
   const uid = localStorage.getItem('uid');
 
   useEffect(() => {
-    
-    if(uid == null){
+    // get my questions
+    if(uid == null || uid === undefined) {
       alert('Please Login');
       window.location = "/signin"; 
     }
 
     axios.get(BASE_URL + '/questions/user?uid=' + uid)
     .then(res => {
-      let data = res.data;
+      if (res.data == "session error") {
+        alert('Please Login');
+        window.location = "/signin";
+      }
+
+      let data = res.data.data;
       setState({
-        questions: data.data,
-        showedQuestions: data.data
+        questions: data,
+        showedQuestions: data,
       });
     })
     .catch(error => {
       alert('Please Login');
       window.location = "/signin"; 
     });
-  }, []);
-
-  useEffect(() => {
-    // get my answers
-    if (uid == null) {
-      alert('Please login');
-      window.localtion = "/signin";
-    }
-    
-    axios.get(BASE_URL + "/answers/user?uid=" + uid)
-      .then(res => {
-        let data = res.data.data;
-        console.log(data);
-        setMyAnswer(data);
-      })
-      .catch(error => {
-        alert("Network error!");
-      });
   }, []);
   
   const handleChange = (parentTopicId, TopicId) => {
@@ -138,21 +122,6 @@ const Dashboard = () => {
                 {state.showedQuestions.map((post) => {
                   return (
                     <PostItem post={post}></PostItem>
-                  )
-                })}
-              </Grid>
-              <br/>
-              <Grid>
-                <Typography variant="h5" gutterBottom component="div">
-                  My Answers
-                </Typography>
-              </Grid>
-              <Grid container>
-                {myAnswer.map((ans) => {
-                  return (
-                    <AnswerWithTitle
-                      answer={ans} 
-                    /> 
                   )
                 })}
               </Grid>

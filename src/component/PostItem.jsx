@@ -34,6 +34,7 @@ const PostItem = ({
     answerCount,
     tags,
     isSolved,
+    hasBest,
   },
 }) => {
 

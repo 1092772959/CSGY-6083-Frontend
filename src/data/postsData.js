@@ -14,6 +14,7 @@ export default [
       'Algorithms',
     ],
     isSolved: true,
+    hasBest: false,
   },
   {
     ques_id: 2,
@@ -30,6 +31,7 @@ export default [
       'Databases',
     ],
     isSolved: true,
+    hasBest: 1,
   },
   {
     ques_id: 3,
@@ -46,12 +48,13 @@ export default [
       'Databases',
     ],
     isSolved: false,
+    hasBest: 0,
   },
   {
     ques_id: 4,
     uid: 1,
     username : 'Test Author',
-    topic_id: 4,
+    topic_id: -1,
     p_topic_id: 1,
     date: new Date('2021-02-02 15:04:23'),
     title: 'How can I rebuild indexes and update stats in MySQL?',
@@ -61,6 +64,7 @@ export default [
       'Computer Science',
     ],
     isSolved: false,
+    hasBest: 0,
   },
   {
     ques_id: 5,
@@ -73,8 +77,10 @@ export default [
     ques_body: "I have experience with MS SQL server where it is possible and useful to update statistic and rebuild indexes. I can't find such option in MySQL innoDB, is there such option?",
     answerCount: 2,
     tags: [
-      'Databases',
+      'Computer Science',
+      'Databases'
     ],
     isSolved: false,
+    hasBest: 0,
   },
 ];

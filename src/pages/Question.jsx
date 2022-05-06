@@ -19,6 +19,8 @@ export default function Question() {
   const [post, setPost] = useState(postsData[0]);
   const [answers, setAnswers] = useState([]);
   const [failSnack, setFailSnack] = React.useState(false);
+  const [hasBest, setHasBest] = useState(0);
+  const [quid, setQuid] = useState(-1);
 
   const params = useParams();
 
@@ -26,10 +28,13 @@ export default function Question() {
 
   // get question
   useEffect( () => {
-    let ques_id = params.quesId
+    let ques_id = params.quesId;
     axios.get(BASE_URL + '/questions/' + ques_id)
       .then(res => {
-        setPost(res.data.data);
+        const data = res.data.data;
+        setPost(data);
+        setHasBest(data.hasBest);
+        setQuid(data.uid);
       })
       .catch(error => {
         alert(error);
@@ -110,7 +115,12 @@ export default function Question() {
       <Grid container spacing={5} sx={{ mt: 1}}>
         {answers.map((ans) => {
           return (
-            <Answer answer={ans}> </Answer>
+            <Answer 
+              answer={ans} 
+              quid={quid}
+              hasBest={hasBest}
+              setHasBest={setHasBest}
+            /> 
           )
         })}
         <Grid item xs={12}>

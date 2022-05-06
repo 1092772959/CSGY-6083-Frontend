@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import Card from '@mui/material/Card';
@@ -44,34 +45,24 @@ const Answer = ({
     ans_body,
     isBest,
     thumb_ups,
-    likedByUser
+    likedByUser,
   },
+  quid,
+  hasBest,
+  setHasBest,
 }) => {
 
   const curUId = parseInt(localStorage.getItem('uid'));
-
+  
   const [liked, setLiked] = useState(likedByUser);
   const [curLikes, setCurLikes] = useState(thumb_ups);
+  const [best, setBest] = useState(isBest);
 
   const handleLike = () => {
     if (liked === 1) {
       setLiked(0);
-      // setCurLikes(curLikes - 1);
       // delete request
       axios.delete(BASE_URL + '/likes/ans?uid=' + curUId + "&ans_id=" + ans_id)
-        .then(res => {
-          let answer = res.data.data;
-          setCurLikes(answer.thumb_ups);
-          alert('Like succeed!');
-        })
-        .catch(error => {
-          alert("Network error!");
-        });
-    } else {
-      setLiked(1);
-      // setCurLikes(curLikes + 1);
-      // like request
-      axios.post(BASE_URL + '/likes/ans?uid=' + curUId + "&ans_id=" + ans_id)
         .then(res => {
           let answer = res.data.data;
           setCurLikes(answer.thumb_ups);
@@ -79,7 +70,51 @@ const Answer = ({
         })
         .catch(error => {
           alert("Network error!");
+        });
+    } else {
+      setLiked(1);
+      // like request
+      axios.post(BASE_URL + '/likes/ans?uid=' + curUId + "&ans_id=" + ans_id)
+        .then(res => {
+          let answer = res.data.data;
+          setCurLikes(answer.thumb_ups);
+          alert('Like succeed!');
         })
+        .catch(error => {
+          alert("Network error!");
+        })
+    }
+  };
+
+  const handleMarkBest = () => {
+    if (hasBest == 0 && best == 0) {
+      axios.post(BASE_URL + "/answers/best?ans_id=" + ans_id + "&is_best=1")
+        .then(res => {
+          if (res.data.code == 0) {      
+            setBest(1);
+            setHasBest(1); 
+          } else {
+            console.log(res.data);
+          }
+        })
+        .catch(err => {
+          alert("Network error!");
+        });
+    } else if (hasBest == 1 && best == 1) {
+      axios.post(BASE_URL + "/answers/best?ans_id=" + ans_id + "&is_best=0")
+        .then(res => {
+          if (res.data.code == 0) {      
+            setBest(0);
+            setHasBest(0); 
+          } else {
+            console.log(res.data);
+          }
+        })
+        .catch(err => {
+          alert("Network error!");
+        });
+    } else {
+      alert("Set best answer error!");
     }
   };
 
@@ -129,24 +164,33 @@ const Answer = ({
                       <Typography >{curLikes}</Typography>
                     </Grid>
                   </Grid>
-                    {/* </Fab> */}
                   </Grid>
-                  {/* <Stack direction="row" spacing={2}> */}
-                    {/* <Fab size="small"> */}
-                  {/* </Stack> */}
                 </Grid>
-                <Grid item xs={8}>
-                  {/* empty grid */}
-                </Grid>
-                {isBest ? 
+                <Grid sx={{ flexGrow: 1 }} />
+                  {(curUId === quid && (hasBest && best || !hasBest))? 
+                    <Grid item xs={3}>
+                      <Button variant="outlined" 
+                        color="success"
+                        onClick={handleMarkBest}>
+                        {best == 0 ? "Mark Best Answer" : "UnMark"} 
+                      </Button>
+                  </Grid> : ''}
+                 
                   <Grid item xs={2}>
-                    <Chip label="Best Answer" color="primary" variant="outlined" />
-                  </Grid> : null}
+                    {(hasBest && best) ?
+                      <Chip label="Best Answer" color="success" />
+                    : null}
+                  </Grid>
               </Grid>
           </CardContent>
       </Card>
     </Grid>
   );
+};
+
+
+Answer.propTypes = {
+  setHasBest: PropTypes.func.isRequired,
 };
 
 export default Answer;

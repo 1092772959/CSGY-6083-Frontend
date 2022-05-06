@@ -50,8 +50,8 @@ const HomePage = () => {
         if(data.code == 0){
           console.log(data);
           setState({
-            // questions: data.data,
-            // showedQuestions: data.data
+            questions: data.data,
+            showedQuestions: data.data
           });
         }
       })

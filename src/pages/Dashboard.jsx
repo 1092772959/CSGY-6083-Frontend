@@ -27,6 +27,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     const uid = localStorage.getItem('uid');
+    
+    if(uid == null){
+      alert('Please Login');
+      window.location = "/signin"; 
+    }
 
     axios.get(BASE_URL + '/questions/user?uid=' + uid)
     .then(res => {

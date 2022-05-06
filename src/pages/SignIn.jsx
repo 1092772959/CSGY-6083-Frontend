@@ -58,8 +58,8 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    //console.log(data);
+    const data = new FormData(event.target);
+    console.log(data.value);
 
     const header = {
       headers : {

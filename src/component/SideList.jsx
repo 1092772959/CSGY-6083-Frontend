@@ -16,24 +16,33 @@ const SideList = () => {
 
   return (
   <Grid container>
+    <Grid item xs={12}>
     <ListItemButton button component={Link} to="/">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItemButton>
+    </Grid>
+
+    <Grid item xs={12}>
     <ListItemButton component={Link} to="/explore">
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
       <ListItemText primary="Explore" />
     </ListItemButton>
+    </Grid>
+
+    <Grid item xs={12}>
     <ListItemButton component={Link} to="/profile">
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Profile" />
     </ListItemButton>
+    </Grid>
+
   </Grid>
   )};
 

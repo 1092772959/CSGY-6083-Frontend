@@ -26,7 +26,6 @@ export default function Profile() {
     bodyFormData.append('country', data.get('country'));
     bodyFormData.append('profile', data.get('profile'));
 
-
     const header = {
       headers : {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -39,7 +38,7 @@ export default function Profile() {
         const data = res.data;
         if (data.code == 0) {
           // redirect to dashboard
-        //   window.location = "/"; 
+          window.location = "/explore"; 
         } else { 
           setFailSnack(true);
         }

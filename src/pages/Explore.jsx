@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import postsData from '../data/postsData';
@@ -11,9 +11,10 @@ import PrimarySearchAppBar from '../component/Header';
 import Typography from '@mui/material/Typography';
 import TopicSelector from '../component/TopicSelector';
 import SideList from '../component/SideList';
-import { BASE_URL } from '../config/server';
+import {FormControl, InputLabel} from '@mui/material';
 
 import axios from 'axios';
+import {BASE_URL} from '../config/server';
 
 const theme = createTheme();
 
@@ -39,7 +40,26 @@ const HomePage = () => {
       });
   }, []);
   
-  const handleChange = (parentTopicId, TopicId) => {
+  const handleChange = (event, parentTopicId, TopicId) => {
+    event.preventDefault();
+    let keyword = event.currentTarget.value;
+    if(keyword !== ''){
+      axios.get(BASE_URL + '/questions/search/' + keyword)
+      .then(res => {
+        let data = res.data;
+        if(data.code == 0){
+          console.log(data);
+          setState({
+            // questions: data.data,
+            // showedQuestions: data.data
+          });
+        }
+      })
+      .catch(error => {
+        alert('No keyword Match');
+      });
+    }
+
     if (parentTopicId === -1) {
       setState({
         questions: state.questions,
@@ -87,16 +107,29 @@ const HomePage = () => {
                     Questions
                   </Typography>  
                 </Grid>
-                <Grid item xs = {5}>
+                <Grid item xs = {3}>
                   <TopicSelector setQuestions={handleChange}></TopicSelector>
                 </Grid>
-                <Grid item xs = {5}>
+                <Grid item xs = {4}>
+                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                      <TextField
+                         required
+                         id="keyword"
+                         label="Search by Keyword"
+                         name="keyword"
+                         autoComplete="keyword"
+                         autoFocus
+                         onChange={handleChange}
+                        />
+                    </FormControl>
+                </Grid>
+                <Grid item xs = {2}>
                   <div style={{ display: "flex" }}>
                     <Button component={Link} to="/questions/post"
                       variant="contained" 
                       color="primary"
                       size="large"
-                      style={{ marginLeft: "auto" }}>
+                      style={{ margin: "auto" }}>
                       Ask a Question
                     </Button>
                   </div>

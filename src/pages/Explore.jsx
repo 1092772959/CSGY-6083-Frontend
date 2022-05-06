@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { Button, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
 
 import postsData from '../data/postsData';
 import PostItem from '../component/PostItem';
@@ -26,7 +27,6 @@ const HomePage = () => {
   });
 
   useEffect(()=> {
-    const uid = localStorage.getItem('uid');
     axios.get(BASE_URL + "/questions/explore")
       .then(res => {
         console.log(res.data.data);
@@ -48,8 +48,10 @@ const HomePage = () => {
       showedQuestions: []
     });
 
-    let keyword = event.currentTarget.value;
-    if(keyword !== ''){
+    const data = new FormData(event.target);
+    console.log(data.get('keyword'));
+    let keyword = data.get('keyword');
+    if(keyword !== '') {
       axios.get(BASE_URL + '/questions/search/' + keyword)
       .then(res => {
         let data = res.data;
@@ -65,6 +67,19 @@ const HomePage = () => {
       });
     }
   }
+
+  const handleReset = () => {
+    axios.get(BASE_URL + "/questions/explore")
+      .then(res => {
+        setState({
+          questions: res.data.data,
+          showedQuestions: res.data.data,
+        });
+      })
+      .catch(error => {
+        alert("Network error!");
+      });
+  };
 
   const handleChangeTopic = (parentTopicId, TopicId) => {
    
@@ -119,7 +134,7 @@ const HomePage = () => {
                   <TopicSelector setQuestions={handleChangeTopic}></TopicSelector>
                 </Grid>
                 <Grid item xs = {4}>
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <Box component="form" onSubmit={handleChangeKeyword} sx={{ m: 1, minWidth: 120 }}>
                       <TextField
                          required
                          id="keyword"
@@ -127,9 +142,14 @@ const HomePage = () => {
                          name="keyword"
                          autoComplete="keyword"
                          autoFocus
-                         onChange={handleChangeKeyword}
                         />
-                    </FormControl>
+                        <Button type="submit" variant="outlined" sx={{ml: 2, mt: 1}}>
+                          Search
+                        </Button>
+                        <Button variant="outlined" onClick={handleReset} sx={{ml: 2, mt: 1}}>
+                          Reset
+                        </Button>
+                  </Box>
                 </Grid>
                 <Grid item xs = {2}>
                   <div style={{ display: "flex" }}>

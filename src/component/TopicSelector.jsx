@@ -9,10 +9,26 @@ import PropTypes from 'prop-types';
 
 import topics from '../data/topcis';
 
+import axios from 'axios';
+
+import {BASE_URL} from '../config/server';
+
 const TopicSelector = ({ setQuestions }) => {
   
   const [parentTopic, setParentTopic] = React.useState(-1);
   const [topic, setTopic] = React.useState(-1);
+  const [topicList, setTopicList] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get(BASE_URL + "/topics")
+      .then(res => {
+        let topics = res.data.data;
+        setTopicList(topics);
+      })
+      .catch(error => {
+        alert("Network error!");
+      });
+  }, []);
 
   const handleParentTopicChange = (event) => {
     setParentTopic(event.target.value);
@@ -39,7 +55,7 @@ const TopicSelector = ({ setQuestions }) => {
             {/* <em>None</em> */}
             All
           </MenuItem>
-            {topics.filter(topicItem => topicItem.parent_id == -1)
+            {topicList.filter(topicItem => topicItem.parent_id == -1)
               .map((topicItem) => {
               return (
                   <MenuItem value={topicItem.topic_id}>
@@ -64,7 +80,7 @@ const TopicSelector = ({ setQuestions }) => {
           <MenuItem value={-1}>
             All
           </MenuItem>
-          {topics.filter(topicItem => parentTopic != -1 ? (topicItem.parent_id == parentTopic) : false)
+          {topicList.filter(topicItem => parentTopic != -1 ? (topicItem.parent_id == parentTopic) : false)
             .map((topicItem) => {
               return (
                   <MenuItem value={topicItem.topic_id}>

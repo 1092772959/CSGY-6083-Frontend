@@ -11,15 +11,33 @@ import PrimarySearchAppBar from '../component/Header';
 import Typography from '@mui/material/Typography';
 import TopicSelector from '../component/TopicSelector';
 import SideList from '../component/SideList';
+import { BASE_URL } from '../config/server';
+
+import axios from 'axios';
 
 const theme = createTheme();
 
 const HomePage = () => {
 
   const[state, setState]=useState({
-    questions: postsData,
-    showedQuestions: postsData,
+    questions: [],
+    showedQuestions: [],
   });
+
+  useEffect(()=> {
+    const uid = localStorage.getItem('uid');
+    axios.get(BASE_URL + "/questions/explore")
+      .then(res => {
+        console.log(res.data.data);
+        setState({
+          questions: res.data.data,
+          showedQuestions: res.data.data,
+        });
+      })
+      .catch(error => {
+        alert("Network error!");
+      });
+  }, []);
   
   const handleChange = (parentTopicId, TopicId) => {
     if (parentTopicId === -1) {

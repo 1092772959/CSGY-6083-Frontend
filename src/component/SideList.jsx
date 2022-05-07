@@ -55,10 +55,18 @@ const SideList = () => {
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Profile" />
+      <ListItemText primary="Edit Profile" />
     </ListItemButton>
     </Grid>
-
+    
+    <Grid item xs={12}>
+    <ListItemButton component={Link} to="/profileDisplay">
+      <ListItemIcon>
+        <PeopleIcon />
+      </ListItemIcon>
+      <ListItemText primary="Show Profile" />
+    </ListItemButton>
+    </Grid>
   </Grid>
   )};
 

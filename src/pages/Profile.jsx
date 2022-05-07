@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Container, Grid, Typography, TextField, Alert, Box, Button} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -12,11 +12,20 @@ export default function Profile() {
   
   const [failSnack, setFailSnack] = React.useState(false);
   
+  useEffect(()=> {
+    const uid = localStorage.getItem('uid');
+    if(uid == null || uid === undefined) {
+      alert('Please Login');
+      window.location = "/signin"; 
+      return;
+    }
+  });
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const uid = localStorage.getItem('uid');
-    
+
     var bodyFormData = new FormData();  
     bodyFormData.append('username', data.get('username'));
     bodyFormData.append('password', data.get('password'));
@@ -38,7 +47,7 @@ export default function Profile() {
         const data = res.data;
         if (data.code == 0) {
           // redirect to dashboard
-          window.location = "/explore"; 
+          window.location = "/profileDisplay"; 
         } else { 
           setFailSnack(true);
         }

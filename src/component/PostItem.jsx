@@ -39,7 +39,7 @@ const PostItem = ({
 }) => {
 
   const curUId = parseInt(localStorage.getItem('uid'));
-  
+
   const [solved, setSolved] = useState(isSolved);
 
   const handleMarkChange = () => {

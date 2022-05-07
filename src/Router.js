@@ -9,6 +9,7 @@ import Explore from './pages/Explore';
 import Profile from './pages/Profile';
 import MyAnswers from './pages/MyAnswer';
 import LikedAnswers from './pages/LikedAnswers';
+import ShowProfile from './pages/ShowProfile';
 
 const Router = () => {
   return (
@@ -23,6 +24,7 @@ const Router = () => {
         <Route exact path='/profile' element={<Profile />}></Route>
         <Route exact path='/myanswer' element={<MyAnswers />}></Route>
         <Route exact path='/mylikes' element={<LikedAnswers />}></Route>
+        <Route exact path='/profileDisplay' element={<ShowProfile />}></Route>
       </Routes>
     </div>
   );
